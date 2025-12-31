@@ -13,12 +13,19 @@
     --second-bg-color: #1e293b;
     --text-color: #f8fafc;
     --main-color: #38bdf8;
+    /* --bg-color: #0f172a; */
 }
 
 /* حل مشكلة تغطية الهيدر للأقسام عند الضغط على الروابط */
+html {
+    scroll-behavior: smooth;
+}
+
+/* لضمان عدم اختفاء القسم خلف الهيدر عند النقر */
 section {
-    scroll-margin-top: 90px; /* يترك مسافة للهيدر الثابت */
-}   
+    scroll-margin-top: 80px;
+}
+
 
 * {
     margin: 0; padding: 0; box-sizing: border-box;
@@ -196,6 +203,7 @@ nav {
     .logo { font-size: 20px; }
     .social-grid { grid-template-columns: 1fr; }
 }
+
     </style>
 <body>
 
@@ -209,11 +217,11 @@ nav {
                 <div class="close-menu" id="closeBtn">
                     <i class="fas fa-times"></i>
                 </div>
-                <li><a href="#home">الرئيسية <i class="fas fa-home"></i></a></li>
-                <li><a href="#about">من أنا <i class="fas fa-user"></i></a></li>
-                <li><a href="#services">خدماتي <i class="fas fa-laptop-code"></i></a></li>
-                <li><a href="#portfolio">أعمالي <i class="fas fa-code"></i></a></li>
-                <li><a href="#contact">تواصل معي <i class="fas fa-envelope"></i></a></li>
+                <li><a href="#home" class="nav-item">الرئيسية <i class="fas fa-home"></i></a></li>
+                <li><a href="#about" class="nav-item">من أنا <i class="fas fa-user"></i></a></li>
+                <li><a href="#services" class="nav-item">خدماتي <i class="fas fa-laptop-code"></i></a></li>
+                <li><a href="#portfolio" class="nav-item">أعمالي <i class="fas fa-code"></i></a></li>
+                <li><a href="#contact" class="nav-item">تواصل معي <i class="fas fa-envelope"></i></a></li>
             </ul>
 
             <div class="logo">MOHND_<span>_2005</span></div>
@@ -346,40 +354,33 @@ nav {
         const overlay = document.getElementById('overlay');
         const links = document.querySelectorAll('.nav-links li a');
 
-        menuBtn.addEventListener('click', () => {
-            navLinks.classList.add('active');
-            overlay.classList.add('active');
-            document.body.style.overflow = 'hidden'; // منع السكرول خلف القائمة
-        });
-
+        // وظيفة الإغلاق
         const closeMenu = () => {
             navLinks.classList.remove('active');
             overlay.classList.remove('active');
-            document.body.style.overflow = 'initial'; // إعادة السكرول
         };
+
+        // فتح القائمة
+        menuBtn.addEventListener('click', () => {
+            navLinks.classList.add('active');
+            overlay.classList.add('active');
+        });
 
         closeBtn.addEventListener('click', closeMenu);
         overlay.addEventListener('click', closeMenu);
-        
+
+        // أهم تعديل: إغلاق القائمة فور النقر على الرابط لضمان الانتقال
         links.forEach(link => {
             link.addEventListener('click', (e) => {
-                const targetId = link.getAttribute('href');
+                // 1. أغلق القائمة أولاً (مثل تليجرام)
+                closeMenu();
                 
-                // إذا كان الرابط داخلي (يبدأ بـ #)
-                if(targetId.startsWith('#')) {
-                    e.preventDefault(); // منع السلوك الافتراضي للحظة
-                    closeMenu(); // أغلق القائمة أولاً
-                    
-                    // تأخير بسيط جداً للتأكد من إغلاق القائمة ثم الانتقال
-                    setTimeout(() => {
-                        const targetSection = document.querySelector(targetId);
-                        if (targetSection) {
-                            targetSection.scrollIntoView({ behavior: 'smooth' });
-                        }
-                    }, 350);
-                }
+                // 2. السماح للمتصفح بالانتقال للرابط بشكل طبيعي
+                // لا نحتاج لعمل preventDefault هنا لترك الـ HTML يقوم بعمله
             });
         });
     </script>
+
+    
 </body>
 </html>
