@@ -145,7 +145,7 @@ nav {
     MEDIA QUERIES (المعدلة للمسافات الجانبية)
    =========================================== */
 
-@media (max-width: 720px) {
+@media (max-width: 820px) {
     .menu-icon { display: block; }
     .nav-links {
         position: fixed;
@@ -219,7 +219,7 @@ nav {
                 </div>
                 <li><a href="#home" class="nav-item">الرئيسية <i class="fas fa-home"></i></a></li>
                 <li><a href="#about" class="nav-item">من أنا <i class="fas fa-user"></i></a></li>
-                <li><a href="#services" class="nav-item">الخدمات <i class="fas fa-laptop-code"></i></a></li>
+                <li><a href="#services" class="nav-item">خدماتي <i class="fas fa-laptop-code"></i></a></li>
                 <li><a href="#portfolio" class="nav-item">أعمالي <i class="fas fa-code"></i></a></li>
                 <li><a href="#contact" class="nav-item">تواصل معي <i class="fas fa-envelope"></i></a></li>
             </ul>
@@ -228,7 +228,7 @@ nav {
         </nav>
     </header>
 
-    <div class="overlay" id="overlay"></div>
+    <!-- <div class="overlay" id="overlay"></div> -->
 
     <section id="home" class="hero container">
         <div class="hero-content">
@@ -331,7 +331,7 @@ nav {
             <h3>دعنا نبني شيئاً رائعاً معاً <i class="fas fa-paper-plane"></i></h3>
             <p>أنا متاح حالياً للمشاريع البرمجية والتدريب</p>
             <div class="social-grid">
-                <a href="mailto:mhndjwah1@gmail.com" class="social-item mail"><i class="fas fa-envelope"></i><span>Email</span></a>
+               <a href="mailto:mhndjwah1@gmail.com" class="social-item mail"><i class="fas fa-envelope"></i><span>Email</span></a>
                 <a href="https://wa.me/967775870567" class="social-item wa"><i class="fab fa-whatsapp"></i><span>Whatsapp</span></a>
                 <a href="https://github.com/mohndjawah" class="social-item gh"><i class="fab fa-github"></i><span>GitHub</span></a>
                 <a href="https://www.facebook.com/profile.php?id=100067382598891" class="social-item fb"><i class="fab fa-facebook-f"></i><span>Facebook</span></a>
@@ -349,38 +349,62 @@ nav {
     </footer>
 
     <script>
-        const menuBtn = document.getElementById('menuBtn');
-        const closeBtn = document.getElementById('closeBtn');
-        const navLinks = document.getElementById('navLinks');
-        const overlay = document.getElementById('overlay');
-        const links = document.querySelectorAll('.nav-links li a');
+document.addEventListener("DOMContentLoaded", () => {
 
-        // وظيفة الإغلاق
-        const closeMenu = () => {
-            navLinks.classList.remove('active');
-            overlay.classList.remove('active');
-        };
+const menuBtn = document.getElementById('menuBtn');
+const closeBtn = document.getElementById('closeBtn');
+const navLinks = document.getElementById('navLinks');
+const overlay = document.getElementById('overlay'); // قد يكون null
+const links = document.querySelectorAll('.nav-links li a');
+const header = document.querySelector('header');
 
-        // فتح القائمة
-        menuBtn.addEventListener('click', () => {
-            navLinks.classList.add('active');
-            overlay.classList.add('active');
-        });
+/* فتح القائمة */
+menuBtn?.addEventListener('click', () => {
+    navLinks?.classList.add('active');
+    overlay?.classList.add('active');
+});
 
-        closeBtn.addEventListener('click', closeMenu);
-        overlay.addEventListener('click', closeMenu);
+/* إغلاق القائمة */
+function closeMenu() {
+    navLinks?.classList.remove('active');
+    overlay?.classList.remove('active');
+}
 
-        // أهم تعديل: إغلاق القائمة فور النقر على الرابط لضمان الانتقال
-        links.forEach(link => {
-            link.addEventListener('click', (e) => {
-                // 1. أغلق القائمة أولاً (مثل تليجرام)
-                closeMenu();
-                
-                // 2. السماح للمتصفح بالانتقال للرابط بشكل طبيعي
-                // لا نحتاج لعمل preventDefault هنا لترك الـ HTML يقوم بعمله
+/* أزرار الإغلاق */
+closeBtn?.addEventListener('click', closeMenu);
+overlay?.addEventListener('click', closeMenu);
+
+/* ===== NAVIGATION WITHOUT OVERLAY ERROR ===== */
+links.forEach(link => {
+    link.addEventListener('click', function (e) {
+        const targetId = this.getAttribute('href');
+        if (!targetId || !targetId.startsWith('#')) return;
+
+        e.preventDefault();
+
+        const target = document.querySelector(targetId);
+        if (!target) return;
+
+        closeMenu();
+
+        requestAnimationFrame(() => {
+            const y =
+                target.getBoundingClientRect().top +
+                window.pageYOffset -
+                (header?.offsetHeight || 0);
+
+            window.scrollTo({
+                top: y,
+                behavior: 'smooth'
             });
         });
-    </script>
+    });
+});
+
+});
+</script>
+
+
 
     
 </body>
