@@ -15,7 +15,7 @@
             align-items: center;
         }
 
-        /* التعديل الثاني: تنسيق الـ Hero ليكون صندوقاً مستقلاً */
+        /* التعديل الثاني: تنسيق الـ Hero */
         .services-main-hero {
             margin-top: 120px; 
             padding: 80px 40px;
@@ -39,21 +39,28 @@
             line-height: 1.8;
         }
 
-        /* إعادة الـ mobile-grid والـ mobile-card للشكل القديم */
+        /* تعديل شبكة البطاقات لظهور 5 في الصف الواحد */
         .mobile-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-            padding: 50px 0;
+            display: flex;
+            flex-wrap: wrap; 
+            justify-content: flex-start; /* التراص من الطرف */
+            gap: 20px; 
+            padding: 50px 2%; 
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
         .mobile-card {
             background: var(--second-bg-color);
             border-radius: 25px;
             border: 1px solid #334155;
-            padding: 20px; /* العودة لـ 20px كما كانت */
+            padding: 20px 2px; 
             text-align: center;
             transition: 0.4s ease;
+            /* حساب العرض ليكون 5 كروت مع خصم المسافات بينهم */
+            width: calc(20% - 16px); 
+            min-width: 180px;
+            flex-shrink: 0; 
         }
 
         .mobile-card:hover {
@@ -62,30 +69,27 @@
         }
 
         .phone-mockup {
-            width: 220px;
-            height: 450px;
+            width: 150px;
+            height: 300px;
             background: #000;
-            border: 8px solid #334155;
-            border-radius: 35px;
-            margin: 0 auto 20px;
+            border: 6px solid #334155;
+            border-radius: 30px;
+            margin: 0 auto 15px;
             overflow: hidden;
             position: relative;
-            cursor: zoom-in;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
         }
 
         .phone-mockup img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: 0.5s;
         }
 
-        .app-info h3 { color: var(--main-color); margin-bottom: 10px; }
-        .app-info p { color: #94a3b8; font-size: 14px; line-height: 1.6; }
-        .tech-stack { margin-top: 15px; font-size: 12px; color: var(--main-color); }
+        .app-info h3 { color: var(--main-color); font-size: 1rem; margin-bottom: 10px; }
 
-        /* نافذة الخيارات (Menu) */
+        /* نافذة الخيارات */
         .options-overlay {
             display: none;
             position: fixed;
@@ -102,7 +106,6 @@
             text-align: center;
             width: 90%; max-width: 350px;
         }
-        .options-card h4 { color: #fff; margin-bottom: 20px; }
         .opt-btn {
             display: flex; align-items: center; justify-content: center; gap: 10px;
             width: 100%; padding: 12px; margin-bottom: 10px;
@@ -112,7 +115,7 @@
         .btn-down { background: #10b981; color: white; }
         .btn-close-opt { background: #ef4444; color: white; }
 
-        /* نافذة العرض الكبيرة (Lightbox) */
+        /* نافذة العرض */
         .viewer {
             display: none;
             position: fixed;
@@ -130,40 +133,62 @@
         .footer-line { border: 0; height: 1px; background: #334155; margin-bottom: 20px; }
         .copy-right span { color: var(--main-color); font-weight: bold; }
 
-        /* الميديا كويري */
-        @media (max-width: 768px) {
-            .services-main-hero h1 { font-size: 2rem; }
-            .services-main-hero { margin-top: 100px; margin-left: 15px; margin-right: 15px; padding: 40px 20px; }
-            .mobile-card { margin-left: 15px; margin-right: 15px; }
+        /* الخط العلوي (Divider) وتنسيق العنوان */
+        .section-divider {
+            border: 0;
+            height: 1px;
+            background: linear-gradient(to left, transparent, var(--main-color), transparent);
+            width: 60%;
+            margin: 40px auto 20px;
+        }
+        .work-title {
+            color: #fff;
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 30px;
         }
 
+
+        /* تعديل حجم الحاوية الرئيسية لتصبح 1900 بكسل */
+        .container {
+           max-width: 2000px; /* الحجم الذي طلبته */
+           width: 95%;        /* لضمان وجود هامش بسيط على الشاشات الأصغر من 1900 */
+           margin: 0 auto;    /* لتوسيط المحتوى في منتصف الشاشة */
+        }
+
+        /* الميديا كويري لضبط عدد الكروت حسب الشاشة */
+        @media (max-width: 1100px) {
+            .mobile-card { width: calc(25% - 15px); } /* 4 كروت */
+        }
+        @media (max-width: 900px) {
+            .mobile-card { width: calc(33.33% - 14px); } /* 3 كروت */
+        }
+        @media (max-width: 650px) {
+            .mobile-card { width: calc(50% - 10px); } /* كرتين */
+            .work-title { font-size: 1.5rem; }
+        }
         @media (max-width: 480px) {
-        .btn-secondary span { 
-            display: none; 
+            .mobile-card { width: 100%; max-width: 280px; margin: 0 auto; } /* كرت واحد */
+            .btn-secondary span { display: none; }
+            .btn-secondary::before { 
+                content: "\f00a \00a0 \f060"; 
+                font-family: "Font Awesome 6 Free"; 
+                font-weight: 900; 
+            }
         }
-        .btn-secondary::before { 
-            /* تغيير الأيقونة لتشير إلى الخدمات (Grid Icon) */
-            content: "\f00a \2190"; 
-            font-family: "Font Awesome 6 Free"; 
-            font-weight: 900; 
-            font-size: 1.1rem;
-        }
-        .btn-secondary { 
-            padding: 8px 15px !important; 
-        }
-    }
     </style>
 </head>
 <body>
 
     <header>
-    <nav class="container">
-        <div class="logo">MOHND_<span>_2005</span></div>
-        <a href="services.html" class="btn-secondary" style="padding: 8px 20px; text-decoration: none; border: 1px solid var(--main-color); border-radius: 5px; color: var(--main-color);">
-            <span>العودة للخدمات</span>
-        </a>
-    </nav>
-</header>
+        <nav class="container">
+            <div class="logo">MOHND_<span>_2005</span></div>
+            <a href="services.html" class="btn-secondary" style="padding: 8px 20px; text-decoration: none; border: 1px solid var(--main-color); border-radius: 5px; color: var(--main-color);">
+                <span>العودة للخدمات</span>
+            </a>
+        </nav>
+    </header>
 
     <div class="container">
         <section class="services-main-hero">
@@ -172,46 +197,77 @@
         </section>
     </div>
 
+    <hr class="section-divider">
+    <div class="work-title">بعض من أعمالي</div>
+
     <main class="container">
         <div class="mobile-grid">
             <div class="mobile-card">
-                <div class="phone-mockup" onclick="showOptions('..//web-project/img/Flutter/تسجيل الدخول.jfif')">
-                    <img src="..//web-project/img/Flutter/تسجيل الدخول.jfif">
+                <div class="phone-mockup" onclick="showOptions('..//Platform/img/Flutter/تسجيل الدخول.jfif')">
+                    <img src="..//Platform/img/Flutter/تسجيل الدخول.jfif">
                 </div>
-                <div class="app-info">
-                    <h3>تطبيق توصيل الطلبات</h3>
-                    <p>تطبيق متكامل يحتوي على تتبع الخريطة مباشر، نظام إشعارات، وبوابة دفع إلكترونية.</p>
-                    <div class="tech-stack"><b>التقنيات:</b> Flutter, Firebase, Google Maps API</div>
-                </div>
+                <div class="app-info"><h3>تطبيق توصيل الطلبات</h3></div>
             </div>
-
             <div class="mobile-card">
-                <div class="phone-mockup" onclick="showOptions('https://via.placeholder.com/300x600/1e293b/38bdf8?text=تطبيق+عقارات')">
-                <img src="..//web-project/img/Flutter/الرئيسية.jfif">
+                <div class="phone-mockup" onclick="showOptions('..//Platform/img/Flutter/الرئيسية.jfif')">
+                    <img src="..//Platform/img/Flutter/الرئيسية.jfif">
                 </div>
-                <div class="app-info">
-                    <h3>منصة عقارية</h3>
-                    <p>تطبيق لعرض وبيع العقارات مع فلاتر بحث متقدمة وتواصل مباشر مع المعلنين.</p>
-                    <div class="tech-stack"><b>التقنيات:</b> Flutter, REST API, Node.js</div>
-                </div>
+                <div class="app-info"><h3>منصة عقارية</h3></div>
             </div>
-
             <div class="mobile-card">
-                <div class="phone-mockup" onclick="showOptions('https://via.placeholder.com/300x600/1e293b/38bdf8?text=تطبيق+محفظة')">
-                    <img src="..//web-project/img/Flutter/عرض الاعلان.jfif">
+                <div class="phone-mockup" onclick="showOptions('..//Platform/img/Flutter/عرض الاعلان.jfif')">
+                    <img src="..//Platform/img/Flutter/عرض الاعلان.jfif">
                 </div>
-                <div class="app-info">
-                    <h3>تطبيق المحفظة الذكية</h3>
-                    <p>إدارة المصاريف اليومية، تحويل الأموال، وتقارير بيانية عن الاستهلاك المالي.</p>
-                    <div class="tech-stack"><b>التقنيات:</b> Flutter, SQLite, Clean Architecture</div>
+                <div class="app-info"><h3>المحفظة الذكية</h3></div>
+            </div>
+            <div class="mobile-card">
+                <div class="phone-mockup" onclick="showOptions('..//Platform/img/Flutter/تسجيل الدخول.jfif')">
+                    <img src="..//Platform/img/Flutter/تسجيل الدخول.jfif">
                 </div>
+                <div class="app-info"><h3>تطبيق توصيل</h3></div>
+            </div>
+            <div class="mobile-card">
+                <div class="phone-mockup" onclick="showOptions('..//Platform/img/Flutter/الرئيسية.jfif')">
+                    <img src="..//Platform/img/Flutter/الرئيسية.jfif">
+                </div>
+                <div class="app-info"><h3>منصة عقارية</h3></div>
+            </div>
+            <div class="mobile-card">
+                <div class="phone-mockup" onclick="showOptions('..//Platform/img/Flutter/عرض الاعلان.jfif')">
+                    <img src="..//Platform/img/Flutter/عرض الاعلان.jfif">
+                </div>
+                <div class="app-info"><h3>المحفظة الذكية</h3></div>
+            </div>
+            <div class="mobile-card">
+                <div class="phone-mockup" onclick="showOptions('..//Platform/img/Flutter/تسجيل الدخول.jfif')">
+                    <img src="..//Platform/img/Flutter/تسجيل الدخول.jfif">
+                </div>
+                <div class="app-info"><h3>تطبيق توصيل</h3></div>
+            </div>
+            <div class="mobile-card">
+                <div class="phone-mockup" onclick="showOptions('..//Platform/img/Flutter/الرئيسية.jfif')">
+                    <img src="..//Platform/img/Flutter/الرئيسية.jfif">
+                </div>
+                <div class="app-info"><h3>منصة عقارية</h3></div>
+            </div>
+            <div class="mobile-card">
+                <div class="phone-mockup" onclick="showOptions('..//Platform/img/Flutter/عرض الاعلان.jfif')">
+                    <img src="..//Platform/img/Flutter/عرض الاعلان.jfif">
+                </div>
+                <div class="app-info"><h3>المحفظة الذكية</h3></div>
+            </div>
+            <div class="mobile-card">
+                <div class="phone-mockup" onclick="showOptions('..//Platform/img/Flutter/تسجيل الدخول.jfif')">
+                    <img src="..//Platform/img/Flutter/تسجيل الدخول.jfif">
+                </div>
+                <div class="app-info"><h3>تطبيق توصيل</h3></div>
             </div>
         </div>
     </main>
 
     <div class="options-overlay" id="optionsOverlay">
         <div class="options-card">
-            <h4>ماذا تريد أن تفعل بالصورة؟</h4>
+            <h4>ماذا تريد أن تفعل بالصورة؟</h4><br>
             <button class="opt-btn btn-view" id="optView"><i class="fas fa-eye"></i> عرض الصورة</button>
             <button class="opt-btn btn-down" id="optDown"><i class="fas fa-download"></i> تحميل الصورة</button>
             <button class="opt-btn btn-close-opt" onclick="closeOptions()"><i class="fas fa-times"></i> إغلاق</button>
@@ -231,52 +287,49 @@
     </footer>
 
     <script>
-    const optionsOverlay = document.getElementById('optionsOverlay');
-    const imgViewer = document.getElementById('imgViewer');
-    const fullImg = document.getElementById('fullImg');
-    const optView = document.getElementById('optView');
-    const optDown = document.getElementById('optDown');
-    
-    let currentImgSrc = "";
-
-    function showOptions(src) {
-        currentImgSrc = src;
-        optionsOverlay.style.display = 'flex';
-    }
-
-    function closeOptions() {
-        optionsOverlay.style.display = 'none';
-    }
-
-    optView.onclick = () => {
-        fullImg.src = currentImgSrc;
-        imgViewer.style.display = 'flex';
-        closeOptions();
-    };
-
-    function closeViewer() {
-        imgViewer.style.display = 'none';
-    }
-
-    // التعديل المخصص للملفات المحلية (Local Files)
-    optDown.onclick = () => {
-        const link = document.createElement('a');
-        link.href = currentImgSrc;
-        link.download = 'Mohannad-Project.jpg';
+        const optionsOverlay = document.getElementById('optionsOverlay');
+        const imgViewer = document.getElementById('imgViewer');
+        const fullImg = document.getElementById('fullImg');
+        const optView = document.getElementById('optView');
+        const optDown = document.getElementById('optDown');
         
-        // إزالة أي خاصية لفتح تبويب جديد
-        link.target = '_self'; 
-        
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        
-        closeOptions(); // إغلاق القائمة والبقاء في الصفحة
-    };
+        let currentImgSrc = "";
 
-    window.onclick = (e) => {
-        if (e.target == optionsOverlay) closeOptions();
-    };
-</script>
+        function showOptions(src) {
+            currentImgSrc = src;
+            optionsOverlay.style.display = 'flex';
+        }
+
+        function closeOptions() {
+            optionsOverlay.style.display = 'none';
+        }
+
+        optView.onclick = () => {
+            fullImg.src = currentImgSrc;
+            imgViewer.style.display = 'flex';
+            closeOptions();
+        };
+
+        function closeViewer() {
+            imgViewer.style.display = 'none';
+        }
+
+        optDown.onclick = () => {
+            if(!currentImgSrc) return;
+            const link = document.createElement('a');
+            link.href = currentImgSrc;
+            const fileName = currentImgSrc.substring(currentImgSrc.lastIndexOf('/') + 1);
+            link.download = fileName || 'project-image.jpg';
+            link.target = '_self'; 
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            closeOptions();
+        };
+
+        window.onclick = (e) => {
+            if (e.target == optionsOverlay) closeOptions();
+        };
+    </script>
 </body>
 </html>
