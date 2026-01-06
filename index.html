@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تطبيقات الموبايل | Mohannad Jawah</title>
+    <title>إنشاء وتطوير واجهات الويب | Mohannad Jawah</title>
     <link rel="stylesheet" href="CSS/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="CSS/service-web.css">
+</head>
     <style>
-        /* التعديل الأول: عكس الهيدر */
+                /* توحيد التصميم مع صفحة الفلاتر */
         header nav.container {
             display: flex;
             flex-direction: row-reverse;
@@ -15,7 +17,12 @@
             align-items: center;
         }
 
-        /* التعديل الثاني: تنسيق الـ Hero */
+        .container {
+            max-width: 1900px; /* الحجم الكبير الذي طلبته */
+            width: 95%;
+            margin: 0 auto;
+        }
+
         .services-main-hero {
             margin-top: 120px; 
             padding: 80px 40px;
@@ -27,113 +34,61 @@
         }
         
         .services-main-hero h1 { 
-            font-size: 3rem; 
+            font-size: clamp(1.8rem, 5vw, 3rem); /* حجم مرن: لا يقل عن 1.8 ولا يزيد عن 3 */
             color: var(--main-color); 
             margin-bottom: 20px; 
-        }
-        .services-main-hero p { 
-            font-size: 1.1rem; 
-            color: #cbd5e1; 
-            max-width: 700px; 
-            margin: 0 auto; 
-            line-height: 1.8;
+            word-wrap: break-word;
         }
 
-        /* تعديل شبكة البطاقات لظهور 5 في الصف الواحد */
-        .mobile-grid {
+        .services-main-hero p { font-size: 1.1rem; color: #cbd5e1; max-width: 800px; margin: 0 auto; line-height: 1.8; }
+
+        /* شبكة عرض واجهات النظام - 6 كروت في الصف */
+        .web-grid {
             display: flex;
             flex-wrap: wrap; 
-            justify-content: flex-start; /* التراص من الطرف */
-            gap: 20px; 
+            justify-content: center; 
+            gap: 15px; 
             padding: 50px 2%; 
-            max-width: 1400px;
-            margin: 0 auto;
         }
 
-        .mobile-card {
+        .web-card {
             background: var(--second-bg-color);
-            border-radius: 25px;
+            border-radius: 20px;
             border: 1px solid #334155;
-            padding: 20px 2px; 
+            padding: 15px; 
             text-align: center;
             transition: 0.4s ease;
-            /* حساب العرض ليكون 5 كروت مع خصم المسافات بينهم */
-            width: calc(20% - 16px); 
-            min-width: 180px;
+            width: calc(16.66% - 13px); 
+            min-width: 250px; /* لضمان وضوح واجهات الويب */
             flex-shrink: 0; 
         }
 
-        .mobile-card:hover {
+        .web-card:hover {
             border-color: var(--main-color);
             transform: translateY(-10px);
         }
 
-        .phone-mockup {
-            width: 150px;
-            height: 300px;
-            background: #000;
-            border: 6px solid #334155;
-            border-radius: 30px;
-            margin: 0 auto 15px;
+        .browser-mockup {
+            width: 100%;
+            height: 160px;
+            background: #0f172a;
+            border: 4px solid #334155;
+            border-radius: 10px;
+            margin-bottom: 15px;
             overflow: hidden;
             position: relative;
             cursor: pointer;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
         }
 
-        .phone-mockup img {
+        .browser-mockup img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        .app-info h3 { color: var(--main-color); font-size: 1rem; margin-bottom: 10px; }
+        .app-info h3 { color: var(--main-color); font-size: 1.1rem; margin-bottom: 8px; }
+        .app-info p { color: #94a3b8; font-size: 0.85rem; line-height: 1.4; }
 
-        /* نافذة الخيارات */
-        .options-overlay {
-            display: none;
-            position: fixed;
-            z-index: 10001;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            justify-content: center; align-items: center;
-        }
-        .options-card {
-            background: #1e293b;
-            padding: 30px;
-            border-radius: 20px;
-            border: 1px solid var(--main-color);
-            text-align: center;
-            width: 90%; max-width: 350px;
-        }
-        .opt-btn {
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-            width: 100%; padding: 12px; margin-bottom: 10px;
-            border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s;
-        }
-        .btn-view { background: var(--main-color); color: white; }
-        .btn-down { background: #10b981; color: white; }
-        .btn-close-opt { background: #ef4444; color: white; }
-
-        /* نافذة العرض */
-        .viewer {
-            display: none;
-            position: fixed;
-            z-index: 10002;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: #000;
-            justify-content: center; align-items: center;
-            flex-direction: column;
-        }
-        .viewer img { max-height: 80vh; border-radius: 10px; border: 2px solid var(--main-color); }
-        .back-btn { margin-top: 20px; background: var(--main-color); color: white; padding: 10px 30px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
-
-        /* الفوتر */
-        .minimal-footer { background: var(--bg-color); padding: 40px 0; text-align: center; }
-        .footer-line { border: 0; height: 1px; background: #334155; margin-bottom: 20px; }
-        .copy-right span { color: var(--main-color); font-weight: bold; }
-
-        /* الخط العلوي (Divider) وتنسيق العنوان */
         .section-divider {
             border: 0;
             height: 1px;
@@ -142,126 +97,171 @@
             margin: 40px auto 20px;
         }
         .work-title {
-            color: #fff;
-            font-size: 2rem;
+            color: #fff; font-size: 2rem; font-weight: bold; text-align: center; margin-bottom: 30px;
+        }
+
+        .btn-back {
+            padding: 8px 18px;
+            text-decoration: none;
+            border: 1px solid var(--main-color);
+            border-radius: 8px;
+            color: var(--main-color);
+            display: flex;
+            align-items: center;
+            gap: 10px; /* مسافة بين العناصر */
+            transition: 0.3s;
             font-weight: bold;
-            text-align: center;
-            margin-bottom: 30px;
         }
 
 
-        /* تعديل حجم الحاوية الرئيسية لتصبح 1900 بكسل */
-        .container {
-           max-width: 2000px; /* الحجم الذي طلبته */
-           width: 95%;        /* لضمان وجود هامش بسيط على الشاشات الأصغر من 1900 */
-           margin: 0 auto;    /* لتوسيط المحتوى في منتصف الشاشة */
-        }
+        .btn-back i { display: none; font-size: 1.2rem; }
+        .btn-back .arrow-icon { display: none; } /* السهم مخفي في الشاشات الكبيرة */
+        .btn-back i:not(.arrow-icon) { display: none; } /* أيقونة الخدمات مخفية في الشاشات الكبيرة */
 
-        /* الميديا كويري لضبط عدد الكروت حسب الشاشة */
-        @media (max-width: 1100px) {
-            .mobile-card { width: calc(25% - 15px); } /* 4 كروت */
-        }
-        @media (max-width: 900px) {
-            .mobile-card { width: calc(33.33% - 14px); } /* 3 كروت */
-        }
-        @media (max-width: 650px) {
-            .mobile-card { width: calc(50% - 10px); } /* كرتين */
-            .work-title { font-size: 1.5rem; }
-        }
-        @media (max-width: 480px) {
-            .mobile-card { width: 100%; max-width: 280px; margin: 0 auto; } /* كرت واحد */
-            .btn-secondary span { display: none; }
-            .btn-secondary::before { 
-                content: "\f00a \00a0 \f060"; 
-                font-family: "Font Awesome 6 Free"; 
-                font-weight: 900; 
+        /* تأكد من أن المسافة بين السهم والأيقونة مضبوطة في الموبايل */
+        @media (max-width: 600px) {
+            .btn-back { 
+                gap: 6px; /* تقليل المسافة قليلاً لتناسب الموبايل */
+                padding: 8px 10px; 
             }
+            .btn-back span { display: none; } 
+            .btn-back .arrow-icon { display: block; font-size: 0.85rem; } 
+            .btn-back i:not(.arrow-icon) { display: block; font-size: 1.1rem; }
         }
+
+
+        /* الميديا كويري لصفحة الويب */
+        @media (max-width: 1400px) { .web-card { width: calc(25% - 12px); } }
+        @media (max-width: 992px) { .web-card { width: calc(33.33% - 12px); } }
+        @media (max-width: 768px) { .web-card { width: calc(50% - 10px); } }
+        @media (max-width: 480px) { .web-card { width: 100%; } }
+        @media (max-width: 768px) {
+            .services-main-hero { padding: 40px 20px; margin-top: 100px; }
+            .services-main-hero p { font-size: 1rem; }
+        }
+
+        
+        /* Lightbox & Overlay */
+        .options-overlay, .viewer { display: none; position: fixed; z-index: 10001; top: 0; left: 0; width: 100%; height: 100%; justify-content: center; align-items: center; }
+        .options-overlay { background: rgba(0, 0, 0, 0.85); }
+        .viewer { background: #000; z-index: 10002; flex-direction: column; }
+        .options-card { background: #1e293b; padding: 30px; border-radius: 20px; border: 1px solid var(--main-color); text-align: center; width: 90%; max-width: 350px; }
+        .opt-btn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 12px; margin-bottom: 10px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .btn-view { background: var(--main-color); color: white; }
+        .btn-down { background: #10b981; color: white; }
+        .btn-close-opt { background: #ef4444; color: white; }
+        .viewer img { max-width: 90%; max-height: 80vh; border: 2px solid var(--main-color); }
+        .back-btn { margin-top: 20px; background: var(--main-color); color: white; padding: 10px 30px; border: none; border-radius: 5px; cursor: pointer; }
     </style>
-</head>
 <body>
 
     <header>
         <nav class="container">
             <div class="logo">MOHND_<span>_2005</span></div>
-            <a href="services.html" class="btn-secondary" style="padding: 8px 20px; text-decoration: none; border: 1px solid var(--main-color); border-radius: 5px; color: var(--main-color);">
+            <a href="services.html" class="btn-back">
+                <i class="fas fa-arrow-left arrow-icon"></i> 
+                <i class="fas fa-th-large"></i> 
                 <span>العودة للخدمات</span>
-            </a>
+            </a>   
         </nav>
     </header>
 
     <div class="container">
         <section class="services-main-hero">
-            <h1>حلول برمجية متكاملة لمشروعك</h1>
-            <p>اكتشف مجموعتي الواسعة من الخدمات الاحترافية، بدءًا من تصميم الواجهات الجذابة وصولاً إلى بناء أنظمة قوية وموثوقة.</p>
+            <h1>نظام AutoMaster المتكامل</h1>
+            <p>نظام ويب متكامل لإدارة شركات السيارات، يعتمد على قاعدة بيانات MySQL، ويهدف إلى تنظيم وتسهيل عمليات بيع وشراء وتأجير السيارات، مع توفير أدوات لإدارة الصيانة وتحسين سير العمل داخل الشركة.</p>
+
         </section>
     </div>
 
     <hr class="section-divider">
-    <div class="work-title">بعض من أعمالي</div>
+    <div class="work-title">واجهات النظام الاحترافي</div>
 
     <main class="container">
-        <div class="mobile-grid">
-            <div class="mobile-card">
-                <div class="phone-mockup" onclick="showOptions('..//web-project/img/Flutter/تسجيل الدخول.jfif')">
-                    <img src="..//web-project/img/Flutter/تسجيل الدخول.jfif">
+        <div class="web-grid">
+            
+            <div class="web-card">
+                <div class="browser-mockup" onclick="showOptions('..//web-project/img/Web/الرئيسية.png')">
+                    <img src="..//web-project/img/Web/الرئيسية.png">
                 </div>
-                <div class="app-info"><h3>تطبيق توصيل الطلبات</h3></div>
-            </div>
-            <div class="mobile-card">
-                <div class="phone-mockup" onclick="showOptions('..//web-project/img/Flutter/الرئيسية.jfif')">
-                    <img src="..//web-project/img/Flutter/الرئيسية.jfif">
+                <div class="app-info">
+                    <h3>الرئيسية</h3>
+                    <p>لوحة تحكم رئيسية لإدارة أقسام النظام والتنقل بين خدمات الشركة وتنظيم العمليات الأساسية بسهولة.</p>
+
                 </div>
-                <div class="app-info"><h3>منصة عقارية</h3></div>
             </div>
-            <div class="mobile-card">
-                <div class="phone-mockup" onclick="showOptions('..//web-project/img/Flutter/عرض الاعلان.jfif')">
-                    <img src="..//web-project/img/Flutter/عرض الاعلان.jfif">
+
+            <div class="web-card">
+                <div class="browser-mockup" onclick="showOptions('..//web-project/img/Web/الخدمات.png')">
+                    <img src="..//web-project/img/Web/الخدمات.png">
                 </div>
-                <div class="app-info"><h3>المحفظة الذكية</h3></div>
-            </div>
-            <div class="mobile-card">
-                <div class="phone-mockup" onclick="showOptions('..//web-project/img/Flutter/تسجيل الدخول.jfif')">
-                    <img src="..//web-project/img/Flutter/تسجيل الدخول.jfif">
+                <div class="app-info">
+                    <h3>الخدمات</h3>
+                    <p>قسم الخدمات يوفّر واجهة مخصصة لإدارة عمليات بيع وشراء السيارات ، وتنظيم خدمات الصيانة ، بالإضافة إلى متابعة وتنفيذ عمليات استئجار السيارات بسهولة ومرونة.</p>
+
                 </div>
-                <div class="app-info"><h3>تطبيق توصيل</h3></div>
             </div>
-            <div class="mobile-card">
-                <div class="phone-mockup" onclick="showOptions('..//web-project/img/Flutter/الرئيسية.jfif')">
-                    <img src="..//web-project/img/Flutter/الرئيسية.jfif">
+
+            <div class="web-card">
+                <div class="browser-mockup" onclick="showOptions('..//web-project/img/Web/الخدمات  - شراء السيارات.png')">
+                    <img src="..//web-project/img/Web/الخدمات  - شراء السيارات.png">
                 </div>
-                <div class="app-info"><h3>منصة عقارية</h3></div>
-            </div>
-            <div class="mobile-card">
-                <div class="phone-mockup" onclick="showOptions('..//web-project/img/Flutter/عرض الاعلان.jfif')">
-                    <img src="..//web-project/img/Flutter/عرض الاعلان.jfif">
+                <div class="app-info">
+                    <h3>الخدمات - شراء السيارات</h3>
+                    <p>تصفح الماركات (تويوتا ، مرسيدس ، BMW)    لعرض الموديلات المتاحة لكل صنف.</p>
                 </div>
-                <div class="app-info"><h3>المحفظة الذكية</h3></div>
             </div>
-            <div class="mobile-card">
-                <div class="phone-mockup" onclick="showOptions('..//web-project/img/Flutter/تسجيل الدخول.jfif')">
-                    <img src="..//web-project/img/Flutter/تسجيل الدخول.jfif">
+
+            <div class="web-card">
+                <div class="browser-mockup" onclick="showOptions('..//web-project/img/Web/الخدمات - منتجات السيارات للشراء.png')">
+                    <img src="..//web-project/img/Web/الخدمات - منتجات السيارات للشراء.png">
                 </div>
-                <div class="app-info"><h3>تطبيق توصيل</h3></div>
-            </div>
-            <div class="mobile-card">
-                <div class="phone-mockup" onclick="showOptions('..//web-project/img/Flutter/الرئيسية.jfif')">
-                    <img src="..//web-project/img/Flutter/الرئيسية.jfif">
+                <div class="app-info">
+                    <h3>الخدمات - منتجات السيارة للشراء</h3>
+                    <p>عرض تفصيلي للسيارات المتاحة (كامري ، كورولا ، هايلوكس ، بيك أب ، إلخ) مع مواصفاتها التقنية وأسعارها النهائية.</p>
                 </div>
-                <div class="app-info"><h3>منصة عقارية</h3></div>
             </div>
-            <div class="mobile-card">
-                <div class="phone-mockup" onclick="showOptions('..//web-project/img/Flutter/عرض الاعلان.jfif')">
-                    <img src="..//web-project/img/Flutter/عرض الاعلان.jfif">
+
+            <div class="web-card">
+                <div class="browser-mockup" onclick="showOptions('..//web-project/img/Web/الخدمات - تأجير السيارات.png')">
+                    <img src="..//web-project/img/Web/الخدمات - تأجير السيارات.png">
                 </div>
-                <div class="app-info"><h3>المحفظة الذكية</h3></div>
-            </div>
-            <div class="mobile-card">
-                <div class="phone-mockup" onclick="showOptions('..//web-project/img/Flutter/تسجيل الدخول.jfif')">
-                    <img src="..//web-project/img/Flutter/تسجيل الدخول.jfif">
+                <div class="app-info">
+                    <h3>الخدمات - تأجير السيارات</h3>
+                    <p>اختيار السيارة حسب النوع: عائلية ، رياضية ، فاخرة ، كلاسيكية أو اقتصادية لتناسب احتياجك.</p>
                 </div>
-                <div class="app-info"><h3>تطبيق توصيل</h3></div>
             </div>
+
+            <div class="web-card">
+                <div class="browser-mockup" onclick="showOptions('..//web-project/img/Web/الخدمات - فئات تأجير السيارات.png')">
+                    <img src="..//web-project/img/Web/الخدمات - فئات تأجير السيارات.png">
+                </div>
+                <div class="app-info">
+                    <h3>الخدمات - فئات السيارة للتأجير</h3>
+                    <p>نظام حجز إلكتروني متطور يدعم إدارة العقود الرقمية وتحديد فترات الإيجار والتأمين.</p>
+                </div>
+            </div>
+
+            <div class="web-card">
+                <div class="browser-mockup" onclick="showOptions('..//web-project/img/Web/من نحن.png')">
+                    <img src="..//web-project/img/Web/من نحن.png">
+                </div>
+                <div class="app-info">
+                    <h3>من نحن</h3>
+                    <p>تعرف على رؤية فريق شركة AutoMaster في تطوير أنظمة السيارات وفريق العمل الذي يقف وراء النجاح.</p>
+                </div>
+            </div>
+
+            <div class="web-card">
+                <div class="browser-mockup" onclick="showOptions('..//web-project/img/Web/تواصل معنا.png')">
+                    <img src="..//web-project/img/Web/تواصل معنا.png">
+                </div>
+                <div class="app-info">
+                    <h3>تواصل معنا</h3>
+                    <p>قنوات تواصل مباشرة مربوطة بقاعدة البيانات لضمان سرعة الرد على العملاء واستفساراتهم.</p>
+                </div>
+            </div>
+
         </div>
     </main>
 
